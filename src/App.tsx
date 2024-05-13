@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import ProductList from './components/ProductsList';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './redux/store';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const productListSlice = useSelector((state: RootState) => state.products);
+  const dispatch = useDispatch();
+
+  const handlerDragEnd = () => {
+
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>Hello World</h1>
+      <DndContext collisionDetection={closestCenter}
+      onDragEnd={handlerDragEnd}>
+        <SortableContext
+          items={productListSlice.productList}
+          strategy={rectSortingStrategy}
+        >
+          <ProductList />
+        </SortableContext>
+      </DndContext>
+    </div>
   )
 }
 
-export default App
+export default App;
