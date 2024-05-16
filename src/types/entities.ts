@@ -4,3 +4,7 @@ export interface IProduct {
     image: string;
     price: number;
 };
+
+export interface IProductsList {
+    productList: Array<IProduct>;
+};
